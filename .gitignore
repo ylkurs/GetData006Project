@@ -1,3 +1,6 @@
+# Dataset
+UCI*HAR*Dataset
+
 # History files
 .Rhistory
 
@@ -16,7 +19,8 @@
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
