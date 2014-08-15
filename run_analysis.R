@@ -1,5 +1,6 @@
 # GetData006 Course Project
 # setwd("C:/Users/Yi Li/Documents/GitHub/GetData006Project")
+# source("run_analysis.R")
 
 run_analysis <- function()
 {
@@ -23,10 +24,23 @@ run_analysis <- function()
 		fdata
 	}
 
-	# X_train <- readTable("UCI HAR Dataset/train/X_train_short.txt")
-	# X_test <- readTable("UCI HAR Dataset/test/X_test_short.txt")
-	X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
-	X_test <- readTable("UCI HAR Dataset/test/X_test.txt")
+	# Read features.txt
+	# http://www.statmethods.net/input/valuelabels.html
+	features <- readTable("UCI HAR Dataset/features.txt")
+	features <- features[,2]
+	means <- grep("mean()", features)
+	stds <- grep("std()", features)
+
+	# Read activity_labels.txt
+	# http://www.statmethods.net/input/valuelabels.html
+	activity_labels <- readTable("UCI HAR Dataset/activity_labels.txt")
+	activity_labels <- activity_labels[,2]
+
+	# Merge train data and test data
+	X_train <- readTable("UCI HAR Dataset/train/X_train_short.txt")
+	X_test <- readTable("UCI HAR Dataset/test/X_test_short.txt")
+	# X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
+	# X_test <- readTable("UCI HAR Dataset/test/X_test.txt")
 
 	y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
 	y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
@@ -39,6 +53,9 @@ run_analysis <- function()
 	print(ncol(y_data))
 	print(nrow(y_data))
 
-	y_data
+	ms_cols <- sort(c(means, stds))
+	X_data_sel <- X_data[, ms_cols]
+	colnames(X_data_sel) <- features[ms_cols]
+	X_data_sel
 }
 
