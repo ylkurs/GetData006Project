@@ -36,7 +36,12 @@ run_analysis <- function()
 	activity_labels <- readTable("UCI HAR Dataset/activity_labels.txt")
 	activity_labels <- activity_labels[,2]
 
-	# Merge train data and test data
+	# Read subject_train.txt
+
+	# Merge train data and test data.
+	subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
+	subject_test <- readTable("UCI HAR Dataset/test/subject_test.txt")
+
 	X_train <- readTable("UCI HAR Dataset/train/X_train_short.txt")
 	X_test <- readTable("UCI HAR Dataset/test/X_test_short.txt")
 	# X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
@@ -45,21 +50,18 @@ run_analysis <- function()
 	y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
 	y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
 
+
+	subject <- rbind(subject_train, subject_test)
 	X_data <- rbind(X_train, X_test)
 	y_data <- rbind(y_train, y_test)
 	for (i in 1:length(activity_labels) ) {
 		y_data[y_data==i] <- toString(activity_labels[i])
 	}
 
-	print(ncol(X_data))
-	print(nrow(X_data))
-	print(ncol(y_data))
-	print(nrow(y_data))
-
 	ms_cols <- sort(c(means, stds))
 	X_data_sel <- X_data[, ms_cols]
 	colnames(X_data_sel) <- features[ms_cols]
 	
-	y_data
+	subject
 }
 
