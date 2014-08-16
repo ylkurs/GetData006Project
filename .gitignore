@@ -1,6 +1,9 @@
 # Dataset
 UCI*HAR*Dataset
 
+# Exported data
+yli_data.txt
+
 # History files
 .Rhistory
 
