@@ -87,6 +87,9 @@ run_analysis <- function()
 		}
 	}
 
+	# Export the data set as a txt file
+	write.table(fin_data, "yli_data.txt", row.name=FALSE)
+
 	fin_data
 }
 
