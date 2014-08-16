@@ -47,6 +47,9 @@ run_analysis <- function()
 
 	X_data <- rbind(X_train, X_test)
 	y_data <- rbind(y_train, y_test)
+	for (i in 1:length(activity_labels) ) {
+		y_data[y_data==i] <- toString(activity_labels[i])
+	}
 
 	print(ncol(X_data))
 	print(nrow(X_data))
@@ -56,6 +59,7 @@ run_analysis <- function()
 	ms_cols <- sort(c(means, stds))
 	X_data_sel <- X_data[, ms_cols]
 	colnames(X_data_sel) <- features[ms_cols]
-	X_data_sel
+	
+	y_data
 }
 
