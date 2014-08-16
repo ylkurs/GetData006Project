@@ -39,16 +39,20 @@ run_analysis <- function()
 	# Read subject_train.txt
 
 	# Read train data and test data.
-	subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
-	subject_test <- readTable("UCI HAR Dataset/test/subject_test.txt")
+	subject_train <- readTable("UCI HAR Dataset/train/subject_train_short.txt")
+	subject_test <- readTable("UCI HAR Dataset/test/subject_test_short.txt")
+	# subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
+	# subject_test <- readTable("UCI HAR Dataset/test/subject_test.txt")
 
 	X_train <- readTable("UCI HAR Dataset/train/X_train_short.txt")
 	X_test <- readTable("UCI HAR Dataset/test/X_test_short.txt")
 	# X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
 	# X_test <- readTable("UCI HAR Dataset/test/X_test.txt")
 
-	y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
-	y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
+	y_train <- readTable("UCI HAR Dataset/train/y_train_short.txt")
+	y_test <- readTable("UCI HAR Dataset/test/y_test_short.txt")
+	# y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
+	# y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
 
 	# Merge train data and test data.
 	subject <- rbind(subject_train, subject_test)
@@ -65,6 +69,24 @@ run_analysis <- function()
 	}
 	colnames(y_data) <- "activity"
 
-	subject
+	fin_data <- cbind(subject, y_data)
+	fin_data <- cbind(fin_data, X_data_sel)
+
+	subjects <- unique(fin_data$subject)
+	activities <- unique(fin_data$activity)
+
+	for (i in 1:length(subjects) ) {
+		for (j in 1:length(activities) ) {
+			print(subjects[i])
+			print(activities[j])
+			cur_data <- fin_data[(fin_data$subject == subjects[i]) && (fin_data$activity == activities[j]), ] 
+			cur_data <- cur_data[,c(-1,-2)] # Remove the first 2 columns
+			if (nrow(cur_data) > 0) {
+				print(colMeans(cur_data))
+			}
+		}
+	}
+
+	fin_data
 }
 
