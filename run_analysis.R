@@ -39,20 +39,14 @@ run_analysis <- function()
 	# Read subject_train.txt
 
 	# Read train data and test data.
-	subject_train <- readTable("UCI HAR Dataset/train/subject_train_short.txt")
-	subject_test <- readTable("UCI HAR Dataset/test/subject_test_short.txt")
-	# subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
-	# subject_test <- readTable("UCI HAR Dataset/test/subject_test.txt")
+	subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
+	subject_test <- readTable("UCI HAR Dataset/test/subject_test.txt")
 
-	X_train <- readTable("UCI HAR Dataset/train/X_train_short.txt")
-	X_test <- readTable("UCI HAR Dataset/test/X_test_short.txt")
-	# X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
-	# X_test <- readTable("UCI HAR Dataset/test/X_test.txt")
+	X_train <- readTable("UCI HAR Dataset/train/X_train.txt")
+	X_test <- readTable("UCI HAR Dataset/test/X_test.txt")
 
-	y_train <- readTable("UCI HAR Dataset/train/y_train_short.txt")
-	y_test <- readTable("UCI HAR Dataset/test/y_test_short.txt")
-	# y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
-	# y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
+	y_train <- readTable("UCI HAR Dataset/train/y_train.txt")
+	y_test <- readTable("UCI HAR Dataset/test/y_test.txt")
 
 	# Merge train data and test data.
 	subject <- rbind(subject_train, subject_test)
@@ -69,27 +63,33 @@ run_analysis <- function()
 	}
 	colnames(y_data) <- "activity"
 
-	fin_data <- cbind(subject, y_data)
-	fin_data <- cbind(fin_data, X_data_sel)
+	merged_data <- cbind(subject, y_data)
+	merged_data <- cbind(merged_data, X_data_sel)
 
-	subjects <- unique(fin_data$subject)
-	activities <- unique(fin_data$activity)
+	subjects <- unique(merged_data$subject)
+	activities <- unique(merged_data$activity)
 
+	counter = 0
+	col_means_data <- merged_data[1,]
 	for (i in 1:length(subjects) ) {
 		for (j in 1:length(activities) ) {
-			print(subjects[i])
-			print(activities[j])
-			cur_data <- fin_data[(fin_data$subject == subjects[i]) && (fin_data$activity == activities[j]), ] 
+			cur_data <- merged_data[(merged_data$subject == subjects[i]) & (merged_data$activity == activities[j]), ] 
 			cur_data <- cur_data[,c(-1,-2)] # Remove the first 2 columns
 			if (nrow(cur_data) > 0) {
-				print(colMeans(cur_data))
+				new_row <- c(subjects[i], activities[j], colMeans(cur_data))
+				if (counter == 0) {
+					col_means_data[1,] <- new_row
+				} else {
+					col_means_data[nrow(col_means_data)+1,] <- new_row
+				}
+				counter <- counter + 1
 			}
 		}
 	}
 
 	# Export the data set as a txt file
-	write.table(fin_data, "yli_data.txt", row.name=FALSE)
+	write.table(col_means_data, "col_means.txt", row.name=FALSE)
 
-	fin_data
+	merged_data
 }
 

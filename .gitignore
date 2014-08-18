@@ -2,7 +2,7 @@
 UCI*HAR*Dataset
 
 # Exported data
-yli_data.txt
+col_means.txt
 
 # History files
 .Rhistory
