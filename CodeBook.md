@@ -1,20 +1,20 @@
 The Code Book
 
-features : data extracted from features.txt
+features : data extracted from features.txt (List of all features)
 
-activity_labels : data extracted from activity_labels.txt
+activity_labels : data extracted from activity_labels.txt (Links the class labels with their activity name)
 
-subject_train : subjects from subject_train.txt
+subject_train : subjects from subject_train.txt (Training subjects)
 
-subject_test : subjects from subject_test.txt
+subject_test : subjects from subject_test.txt (Test subjects)
 
-X_train : the measurements from X_train.txt
+X_train : the measurements from X_train.txt (Training set)
 
-X_test : the measurements from X_test.txt
+X_test : the measurements from X_test.txt (Test set)
 
-y_train : the activitives (as integers) from y_train.txt
+y_train : the activitives (as integers) from y_train.txt (Training labels)
 
-y_test : the activitives (as integers) from y_test.txt
+y_test : the activitives (as integers) from y_test.txt (Test labels)
 
 subject : subject_train + subject_test
 
