@@ -88,6 +88,10 @@ run_analysis <- function()
 	}
 
 	# Export the data set as a txt file
+	temp_colnames <- paste("Avg-of", colnames(col_means_data), sep = "-")
+	temp_colnames[1] <- gsub("^Avg-of-", "", temp_colnames[1])
+	temp_colnames[2] <- gsub("^Avg-of-", "", temp_colnames[2])
+	colnames(col_means_data) <- temp_colnames
 	write.table(col_means_data, "col_means.txt", row.name=FALSE)
 
 	merged_data
