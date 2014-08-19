@@ -1,6 +1,4 @@
 # GetData006 Course Project
-# setwd("C:/Users/Yi Li/Documents/GitHub/GetData006Project")
-# source("run_analysis.R")
 
 run_analysis <- function()
 {
@@ -35,8 +33,6 @@ run_analysis <- function()
 	# http://www.statmethods.net/input/valuelabels.html
 	activity_labels <- readTable("UCI HAR Dataset/activity_labels.txt")
 	activity_labels <- activity_labels[,2]
-
-	# Read subject_train.txt
 
 	# Read train data and test data.
 	subject_train <- readTable("UCI HAR Dataset/train/subject_train.txt")
